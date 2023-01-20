@@ -4,6 +4,7 @@ $font-primary: "sans-serif";
 ::after,
 ::before {
   box-sizing: border-box;
+  margin: 0;
 }
 
 body {
@@ -21,7 +22,7 @@ body {
   grid-area: name1;
   display: flex;
   align-items: center;
-  width: 600px;
+  width: 641.2px;
   height: 40px;
   padding-right: 30px;
   background-color: blue;
@@ -36,32 +37,115 @@ body {
 }
 
 .box1 {
-  width: 600px;
+  width: fit-content;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-area: box1;
   border: 2px solid black;
+  border-radius: 2px;
   padding-left: 10px;
   padding-right: 10px;
   gap: 10px;
 
-  .money_box {
-    height: 30px;
-    display: grid;
-    grid-template-columns: 45px 45px 45px 45px  ;
-    grid-template-rows: 30px   ;
-    border: 2px solid black;
-    align-items: center;
-    
-  }
-
   .product {
-    border: 2px solid red;
+    display: grid;
+    grid-template-columns: 61px 135px ;
+    grid-template-rows:  20px 25px 65px ;
+    grid-template-areas: 
+    "img text1"
+    ".   text2"
+    ".   text3"
+    "box1 box1"
+    ;
+    border: 2px solid black;
+    border-radius: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+   
   }
 
   img {
     width: 50px;
     height: 50px;
+    grid-area: img;
+    border-radius: 2px;
+  }
+
+  .title {
+    margin-left: 5px;
+    grid-area: text1;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .manufacturer {
+    margin-left: 5px;
+    grid-area: text2;
+
+  }
+
+  .description {
+    margin-left: 5px;
+    grid-area: text3;
+  }
+
+  .money_box {
+    height: 30px;
+    display: grid;
+    grid-auto-flow: row;
+    
+    grid-template-columns: 49px 49px 49px 49px;
+    grid-template-rows: 30px;
+    grid-area: box1;
+    border: 0.1px solid black;
+    align-items: center;
+    justify-items:center;
+   
+  }
+
+  .price {
+    padding-top: 5px;
+    height: 29px;
+    border-right: 1px solid red;
+    
+  }
+  button {
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+
+    &:hover{
+        transform: scale(1.025);
+    }
+  }
+  
+ 
+  .buy_icon {
+    width: 25px;
+    height: 19px;
+    margin-top: 2px;
+    background-color: white;
+  }
+
+
+  .pl_btn, .min_btn {
+    width: 14px;
+    height: 13px;
+    display: flex;
+    row-gap: 15px;
+    justify-content: center;
+  }
+
+//   .min_btn{
+//     width: 14px;
+//     height: 14px;
+//     display: flex;
+//     justify-content: center;
+//   }
+
+  .pl, .min {
+    width: 9px;
+    height: 9px; 
   }
 }
 
@@ -80,17 +164,35 @@ body {
     margin-right: 10px;
     margin-left: 10px;
   }
+
 }
 
 .box2 {
   width: 400px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-area: box2;
+  display: flex;
   border: 2px solid black;
   padding-left: 10px;
   padding-right: 10px;
-  gap: 10px;
+  
+
+
+  .price_box {
+    width:400px ;
+    height: 30px;
+    display: flex;
+    margin-top: 290px;
+    margin-bottom:10px ;
+    align-items: flex-end;
+    border: 2px solid black;
+    
+  
+    p span {
+        border: 2px solid red;
+    }
+
+
+}
+
 }
 
 
