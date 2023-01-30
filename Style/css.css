@@ -6,11 +6,12 @@
 }
 
 body {
-  font-family: "sans-serif";
-  margin-top: 1%;
+  font-size: 11px;
+  font-family: 'Verdana, Geneva, Tahoma, sans-serif';
+  margin-top: 2%;
   justify-content: center;
   display: grid;
-  grid-template-areas: "name1 name2" "box1  box2";
+  grid-template-areas: "name1 box2" "box1  box2";
   column-gap: 10px;
 }
 
@@ -18,11 +19,21 @@ body {
   grid-area: name1;
   display: flex;
   align-items: center;
-  width: 641.2px;
+  width: 671.5px;
   height: 40px;
   padding-right: 30px;
-  background-color: blue;
+  background-color: gold;
   border: 2px solid black;
+}
+
+.naglowek_box .cart {
+  display: grid;
+  grid-auto-flow: column;
+  margin-left: 550px;
+}
+
+.naglowek_box .cart .count1 {
+  margin-left: 5px;
 }
 
 .naglowek_box img {
@@ -33,7 +44,6 @@ body {
 }
 
 .box1 {
-  width: fit-content;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-area: box1;
@@ -42,22 +52,26 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   gap: 10px;
+  overflow-y: scroll;
+  max-height: 320px;
 }
 
 .box1 .product {
   display: grid;
   grid-template-columns: 61px 135px;
   grid-template-rows: 20px 25px 65px;
-  grid-template-areas: "img text1" ".   text2" ".   text3" "box1 box1";
-  border: 2px solid black;
+  grid-template-areas: "img text1" "img text2" "img text3" "box1 box1";
+  border: 2px solid orange;
   border-radius: 2px;
   margin-top: 5px;
   margin-bottom: 5px;
+  padding: 2px;
+  opacity: 90%;
 }
 
 .box1 img {
   width: 50px;
-  height: 50px;
+  height: 47px;
   grid-area: img;
   border-radius: 2px;
 }
@@ -65,8 +79,6 @@ body {
 .box1 .title {
   margin-left: 5px;
   grid-area: text1;
-  width: fit-content;
-  height: fit-content;
 }
 
 .box1 .manufacturer {
@@ -86,7 +98,7 @@ body {
   grid-template-columns: 49px 49px 49px 49px;
   grid-template-rows: 30px;
   grid-area: box1;
-  border: 0.1px solid black;
+  border: 0.1px solid none;
   align-items: center;
   justify-items: center;
 }
@@ -109,7 +121,7 @@ body {
 
 .box1 .buy_icon {
   width: 25px;
-  height: 19px;
+  height: 18px;
   margin-top: 2px;
   background-color: white;
 }
@@ -139,29 +151,89 @@ body {
 
 .naglowek_box2 img {
   width: 20px;
-  height: 20px;
+  height: 18px;
   margin-right: 10px;
   margin-left: 10px;
 }
 
-.box2 {
-  width: 400px;
-  display: flex;
-  border: 2px solid black;
-  padding-left: 10px;
-  padding-right: 10px;
+.sidebar {
+  width: fit-content;
+  min-width: 200px;
+  max-height: 420px;
+  border-radius: 5px;
+  background-color: #eee;
+  padding: 15px;
+  text-align: center;
+  grid-area: box2;
+  margin-left: 10px;
+  overflow-y: scroll;
 }
 
-.box2 .price_box {
-  width: 400px;
-  height: 30px;
-  display: flex;
-  margin-top: 290px;
-  margin-bottom: 10px;
-  align-items: flex-end;
-  border: 2px solid black;
+.sidebar .cart-item {
+  max-height: 300px;
+  align-items: center;
+  justify-content: space-between;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 40px 40px 40px 50px;
+  grid-area: name2;
+  gap: 15px;
+  margin: 10px 10px;
+  margin-right: 0;
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid #aaa;
+  border-radius: 3px;
 }
 
-.box2 .price_box p span {
-  border: 2px solid red;
+.sidebar .row-img {
+  width: 44px;
+  height: 42px;
+  border-radius: 100px;
+  border: 1px solid goldenrod;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar .rowimg {
+  min-width: 20px;
+  max-height: 20px;
+  border-radius: 50%;
+}
+
+.sidebar .fa-trash:hover {
+  cursor: pointer;
+  color: #333;
+}
+
+.sidebar .plus_min_btn button {
+  width: 15px;
+  height: 20.5px;
+  padding-right: 12px;
+  margin-bottom: 4px;
+}
+
+.sidebar .number {
+  margin: 0 5px 3px 3px;
+}
+
+.sidebar .foot {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+  padding: 10px 0px;
+  border-top: 1px solid #333;
+  margin-top: 20px;
+}
+
+.sidebar .head {
+  background-color: gold;
+  border-radius: 3px;
+  grid-area: name2;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
 }
