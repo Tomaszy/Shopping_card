@@ -6,24 +6,35 @@
 }
 
 body {
+  min-width: 1150px;
+  min-height: 360px;
   font-size: 11px;
-  font-family: 'Verdana, Geneva, Tahoma, sans-serif';
+  font-family: "Verdana, Geneva, Tahoma, sans-serif";
   margin-top: 2%;
+  margin-left: 5%;
   justify-content: center;
   display: grid;
   grid-template-areas: "name1 box2" "box1  box2";
   column-gap: 10px;
 }
 
+@media (max-width: 740px) {
+  .body {
+    display: grid;
+    grid-template-areas: "name1" "box1" "box2";
+  }
+}
+
 .naglowek_box {
   grid-area: name1;
   display: flex;
   align-items: center;
-  width: 671.5px;
-  height: 40px;
+  min-width: 671.5px;
+  min-height: 40px;
   padding-right: 30px;
   background-color: gold;
   border: 2px solid black;
+  border-radius: 2px;
 }
 
 .naglowek_box .cart {
@@ -37,34 +48,45 @@ body {
 }
 
 .naglowek_box img {
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   margin-right: 10px;
   margin-left: 10px;
 }
 
 .box1 {
+  max-height: 320px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-area: box1;
   border: 2px solid black;
   border-radius: 2px;
-  padding-left: 10px;
-  padding-right: 10px;
-  gap: 10px;
+  padding-left: 7px;
+  gap: 8.5px;
   overflow-y: scroll;
-  max-height: 320px;
+}
+
+.box1 .product-name {
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-size: 1.14em;
+  letter-spacing: 0.2px;
+  margin-bottom: 0.6px;
+  min-height: 0px;
+}
+
+.box1 .manufacturer {
+  font-size: 1.01em;
+  margin-top: 2px;
 }
 
 .box1 .product {
   display: grid;
-  grid-template-columns: 61px 135px;
-  grid-template-rows: 20px 25px 65px;
+  grid-template-columns: 62px 150px;
+  grid-template-rows: 30px 25px 65px;
   grid-template-areas: "img text1" "img text2" "img text3" "box1 box1";
   border: 2px solid orange;
   border-radius: 2px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  gap: 2px;
   padding: 2px;
   opacity: 90%;
 }
@@ -76,26 +98,22 @@ body {
   border-radius: 2px;
 }
 
-.box1 .title {
-  margin-left: 5px;
-  grid-area: text1;
-}
-
 .box1 .manufacturer {
-  margin-left: 5px;
+  margin-left: 3px;
   grid-area: text2;
 }
 
 .box1 .description {
-  margin-left: 5px;
+  margin-left: 3px;
   grid-area: text3;
+  line-height: 11.5px;
 }
 
 .box1 .money_box {
-  height: 30px;
+  min-height: 30px;
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: 49px 49px 49px 49px;
+  grid-template-columns: 51px 51px 51px 51px;
   grid-template-rows: 30px;
   grid-area: box1;
   border: 0.1px solid none;
@@ -126,15 +144,17 @@ body {
   background-color: white;
 }
 
-.box1 .pl_btn, .box1 .min_btn {
-  width: 14px;
-  height: 13px;
+.box1 .pl_btn,
+.box1 .min_btn {
+  min-width: 14px;
+  min-height: 13px;
   display: flex;
   row-gap: 15px;
   justify-content: center;
 }
 
-.box1 .pl, .box1 .min {
+.box1 .pl,
+.box1 .min {
   width: 9px;
   height: 9px;
 }
@@ -142,8 +162,8 @@ body {
 .naglowek_box2 {
   display: flex;
   align-items: center;
-  width: 400px;
-  height: 40px;
+  min-width: 400px;
+  min-height: 40px;
   padding-right: 30px;
   background-color: blue;
   border: 2px solid black;
@@ -207,15 +227,22 @@ body {
   color: #333;
 }
 
-.sidebar .plus_min_btn button {
-  width: 15px;
-  height: 20.5px;
-  padding-right: 12px;
-  margin-bottom: 4px;
+.sidebar .plButton,
+.sidebar .minButton {
+  max-width: 21.5px;
+  max-height: 25px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar .plButton:hover,
+.sidebar .minButton:hover {
+  transform: scale(1.115);
 }
 
 .sidebar .number {
-  margin: 0 5px 3px 3px;
+  margin: 2.8px;
 }
 
 .sidebar .foot {
