@@ -6,25 +6,24 @@ const total2 = document.querySelector(".total2");
 
 
 
+async function fetchProducts () {
 
-fetch("https://dummyjson.com/products")
-  .then((response) => response.json())
-  .then((data) => {
-    localStorage.setItem("products", JSON.stringify(data));
-    
-  });
+  const response = await fetch("https://dummyjson.com/products");
+    // localStorage.setItem("products", JSON.stringify(response.json()));
+    return await response.json()
+    console.log("save to lacalStorage")
+}
 
- 
 
 // LOAD (OBJECT) DATA TO PRODUCT VAR
-var products = JSON.parse(localStorage.getItem("products"));
-console.log(products);
+// const products = JSON.parse(localStorage.getItem("products"));
+// console.log(products);
+// console.log(cart);
 
-console.log(cart);
 
 //FETCHOWANIE DANYCH
-function loadJSON() {
-  
+async function loadJSON() {
+  const products = await fetchProducts()
   products.products.forEach((product) => {
     
     var { title, category, description, price, id, images, category } = product;
@@ -137,11 +136,6 @@ function renderManufacturer(){
   })
 }
 
-
-
-
-
-
 function renderCartItems() {
   cartItem.innerHTML = ""; // clear cart element
 
@@ -158,8 +152,6 @@ function renderCartItems() {
   
 }) 
 
-
-  
   cart.forEach((item) => {
     var { images, title, price, id, numberOfUnits, category } = item;
     cartItem.innerHTML += `
