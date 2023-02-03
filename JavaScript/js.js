@@ -9,14 +9,11 @@ const total2 = document.querySelector(".total2");
 async function fetchProducts () {
 
   const response = await fetch("https://dummyjson.com/products");
-    // localStorage.setItem("products", JSON.stringify(response.json()));
-    return await response.json()
-    console.log("save to lacalStorage")
+      return  await response.json()
 }
-
-
 // LOAD (OBJECT) DATA TO PRODUCT VAR
 // const products = JSON.parse(localStorage.getItem("products"));
+
 // console.log(products);
 // console.log(cart);
 
@@ -65,8 +62,9 @@ let input = document.getElementById(id);
 let value = input.value;
 if (value >= 0) {
   value ++;
+  input.value = value;
 }
-input.value = value;
+
 }
   
 function min_Button (id) {
@@ -77,8 +75,8 @@ if (value <= 0 ) {
 }
 else {
   value --;
+  input.value = value;
 }
-input.value = value;
 }
 
 
@@ -89,10 +87,10 @@ loadJSON();
 // ADD ITEM TO CART (.BOX2)
 var cart = [];
 
-function addToCart(id) {
+async function addToCart(id) {
   let input = document.getElementById(id);
   let quantity = Number(input.value);
-
+  const products = await fetchProducts()
 
   if (cart.some((item) => item.id === id)) {
     changeNumberOfUnits("plus", id);
@@ -107,9 +105,8 @@ function addToCart(id) {
       
       
     });
-    console.log(cart);
-    updateCart()
-    renderManufacturer();
+    groupCart()
+    renderManufacturer()
     updateCart()
     
   }
@@ -118,44 +115,39 @@ function addToCart(id) {
 
 //UPDATE CART
 function updateCart() {
-  renderCartItems();
-  renderSubtotal();
-  
+  groupCart()
+ 
+  renderCartItems()
+  renderSubtotal()
+ 
 }
 
 
 
-let cart2 = []
+
 function renderManufacturer(){
-  
-  const manufacturer = cart.map (product => `${product.category}`);
-  console.log(product);
-  manufacturer.forEach((category)=>{
-      (cart2.includes(category))? null:cart2.push(category);
+  // const values = groupCart()
+
+  // const category = values.map (product => `${product.category}`);
+  // values.forEach((category)=>{
+  //     (values.includes(category)) ? renderCartItems() : null;
       
-  })
+  // })
 }
 
 function renderCartItems() {
   cartItem.innerHTML = ""; // clear cart element
-
-  cart2.forEach((el)=>{
-    
-    cartItem.innerHTML += `  
-    <div>
-    <div class="incart">
-        <h2 class="category" >${el}</h4>
-    </div>
-   <div>
-   `
-
-  
-}) 
+  const values = groupCart()
+  console.log(values);
+ 
 
   cart.forEach((item) => {
+
     var { images, title, price, id, numberOfUnits, category } = item;
+     
     cartItem.innerHTML += `
-     <div class='cart-item' data-filter=${category}>
+    <div data-filter=${category}> ${category}
+     <div class='cart-item' >
      <div class='row-img'>
      <img class='rowimg' src="${images[0]}" >
      </div>
@@ -168,9 +160,10 @@ function renderCartItems() {
      <p style='font-size:12px;'>${title}</p>
      <h2 style='font-size: 15px;'>$ ${price}.00</h2>
      <i class='fa-solid fa-trash' onclick='removeItemFromCart(${id})'></i></div>
-`;
-  });
+`
+  })
 }
+
 
 
 // + - NUMBER OF ITEMS (BOX2)
@@ -229,59 +222,27 @@ function removeItemFromCart(id) {
 
 
 
-
-
-
-//FILTER
-
-  const liItem = document.querySelectorAll('.inputs ul li');
-  const product = document.querySelectorAll('.cartItem') ;
-  const product1 = document.querySelectorAll('.cartItem cart-item') ;
-
-  liItem.forEach(li => {
-    li.onclick = function() {
-     //active
-     liItem.forEach(li => {
-         li.className = "";
-     })
-     li.className = "active";
-
-     //Filter
-     const value = li.textContent;
-     console.log(value);
-   
-     product.forEach(product => {
-      product.style.display = 'none';
-         if (product.getAttribute('data-filter') == value.toLowerCase() || value == "All Menu" ){
-          
-          
-          renderCartItems(product);
-          product.style.display = 'block';
-          
-         } 
-     })
-    
-
-     product1.forEach(product => {
-      
-      product.style.display = 'none';
-         if (product.getAttribute('data-filter') == value.toLowerCase() || value == "All Menu" ){ 
-          renderCartItems(product);
-          product.style.display = 'block';
-        
-         }
-
-     })
-
-
-    }
-    
- });
- 
-
-
-
-
-
+ function groupCart() {
+  // const products = fetchProducts()
+  const categories = new Set();
+  cart.forEach((product) => {
+    // console.log("product:");
+    categories.add(product.category);
+  });
+  const result = [];
+  Array.from(categories.values()).forEach((category) => {
+    const categoryObject = {
+      category,
+      products: []
+    };
+    const filteredProducts = cart.filter((product) => {
+      return product.category === category;
+    });
+    categoryObject.products = filteredProducts;
+    result.push(categoryObject);
+  });
+  
+  return result;
+}
 
 
