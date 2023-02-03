@@ -1,80 +1,118 @@
-// const buy = document.querySelector('.add-to-cart-btn');
-// const productEl = document.querySelector('.product');
-// const cartTotalValue = document.getElementById('cart-total-value');
-// const plus_button = document.querySelector('.pl_btn');
-// const min_button = document.querySelector('.min_btn');
-// const ul_list = document.querySelector('.cart-list');
-
 const productList = document.querySelector(".box1");
 const total = document.querySelector(".total");
 const cartItem = document.querySelector(".cartItem");
 const amoutOfItems = document.querySelector(".count1");
 const total2 = document.querySelector(".total2");
 
-//PUSCH DATA TO TABLE
-// var data1 = [];
+
+
 
 fetch("https://dummyjson.com/products")
   .then((response) => response.json())
   .then((data) => {
     localStorage.setItem("products", JSON.stringify(data));
-    // data.products.forEach (product => {
-    //   data1.push(product);
-
-    // })
+    
   });
+
+ 
 
 // LOAD (OBJECT) DATA TO PRODUCT VAR
 var products = JSON.parse(localStorage.getItem("products"));
+console.log(products);
+
+console.log(cart);
 
 //FETCHOWANIE DANYCH
 function loadJSON() {
+  
   products.products.forEach((product) => {
-    var { title, category, description, price, id, images } = product;
+    
+    var { title, category, description, price, id, images, category } = product;
 
     productList.innerHTML += `
       
-          <div class="product">
-          <img src="${images[0]}" >
+          <div class="product" >
+          <img src="${images[0]}" class= "img">
           <p class="product-name">${title}</p>
-          <p class="manufacturer">${category}</p>
+          <p class="category">${category}</p>
           <p class="description">${description}</p>
           <p class="line"></p>
           
           <div class="money_box">
           <div class="product-price">  <span>${price}</span>  <span>€</span>  </div>
-          <div><span class="total2">1</span></div>
+          <div>  <input type="number" class="input" id="${id}" value="1" min="0" max="200" step="1" placeholder="Number"/>
+          </div>
           
           <div> 
-          <button class="pl_btn" onclick="changeNumberOfUnits('plus', ${id})">  <img class="pl" src="./assets/plus-solid.svg" alt="">  </button>
-          <button class="min_btn" onclick="changeNumberOfUnits('minus', ${id})"> <img class="min" src="./assets/minus-solid.svg" alt=""> </button>
+          <button class="pl_btn" id="increment" onclick="pl_Button( ${id})">  <img class="pl" src="./assets/plus-solid.svg" alt="">  </button>
+          <button class="min_btn" onclick="min_Button(${id})"> <img class="min" src="./assets/minus-solid.svg" alt=""> </button>
           </div>
           
           <button class="add-to-cart-btn" onclick="addToCart(${id})"> <img class="buy_icon" src="./assets/cart-plus-solid.svg" alt="">  </button>
           </div>
-         
           </div>
           
     `;
+
   });
+ 
 }
+
+
+
+function pl_Button (id){
+
+let input = document.getElementById(id);
+let value = input.value;
+if (value >= 0) {
+  value ++;
+}
+input.value = value;
+}
+  
+function min_Button (id) {
+let input = document.getElementById(id);
+let value = input.value;
+if (value <= 0 ) {
+  console.log("no no no ");
+}
+else {
+  value --;
+}
+input.value = value;
+}
+
+
+
 loadJSON();
-var cart = [];
+
 
 // ADD ITEM TO CART (.BOX2)
+var cart = [];
+
 function addToCart(id) {
+  let input = document.getElementById(id);
+  let quantity = Number(input.value);
+
+
   if (cart.some((item) => item.id === id)) {
     changeNumberOfUnits("plus", id);
   } else {
     // console.log(product);
+    
     const item = products.products.find((product) => product.id === id);
 
     cart.push({
       ...item,
-      numberOfUnits: 1,
+      numberOfUnits:quantity
+      
+      
     });
-    updateCart();
-    console.log(item);
+    console.log(cart);
+    updateCart()
+    renderManufacturer();
+    updateCart()
+    
   }
 }
 
@@ -83,17 +121,51 @@ function addToCart(id) {
 function updateCart() {
   renderCartItems();
   renderSubtotal();
+  
 }
+
+
+
+let cart2 = []
+function renderManufacturer(){
+  
+  const manufacturer = cart.map (product => `${product.category}`);
+  console.log(product);
+  manufacturer.forEach((category)=>{
+      (cart2.includes(category))? null:cart2.push(category);
+      
+  })
+}
+
+
+
+
 
 
 function renderCartItems() {
   cartItem.innerHTML = ""; // clear cart element
+
+  cart2.forEach((el)=>{
+    
+    cartItem.innerHTML += `  
+    <div>
+    <div class="incart">
+        <h2 class="category" >${el}</h4>
+    </div>
+   <div>
+   `
+
+  
+}) 
+
+
+  
   cart.forEach((item) => {
-    var { images, title, price, id, numberOfUnits } = item;
+    var { images, title, price, id, numberOfUnits, category } = item;
     cartItem.innerHTML += `
-     <div class='cart-item'>
+     <div class='cart-item' data-filter=${category}>
      <div class='row-img'>
-     <img class='rowimg' src=${images[0]}>
+     <img class='rowimg' src="${images[0]}" >
      </div>
      <div class="plus_min_btn" >   
     
@@ -110,23 +182,28 @@ function renderCartItems() {
 
 
 // + - NUMBER OF ITEMS (BOX2)
+
 function changeNumberOfUnits(action, id) {
+
   cart = cart.map((item) => {
     let numberOfUnits = item.numberOfUnits;
-
     if (item.id === id) {
+     
       if (action === "minus" && numberOfUnits > 1) {
         numberOfUnits--;
-      } else if (action === "plus" && numberOfUnits < item.stock) {
+
+      } else if (action === "plus" && numberOfUnits < item.stock  ) {
         numberOfUnits++;
       }
     }
+   
+   
     return {
       ...item,
       numberOfUnits,
     };
-  });
-
+    });
+     
   updateCart();
 }
 
@@ -154,3 +231,65 @@ function removeItemFromCart(id) {
   cart = cart.filter((item) => item.id !== id);
   updateCart();
 }
+
+
+
+
+
+
+
+
+
+//FILTER
+
+  const liItem = document.querySelectorAll('.inputs ul li');
+  const product = document.querySelectorAll('.cartItem') ;
+  const product1 = document.querySelectorAll('.cartItem cart-item') ;
+
+  liItem.forEach(li => {
+    li.onclick = function() {
+     //active
+     liItem.forEach(li => {
+         li.className = "";
+     })
+     li.className = "active";
+
+     //Filter
+     const value = li.textContent;
+     console.log(value);
+   
+     product.forEach(product => {
+      product.style.display = 'none';
+         if (product.getAttribute('data-filter') == value.toLowerCase() || value == "All Menu" ){
+          
+          
+          renderCartItems(product);
+          product.style.display = 'block';
+          
+         } 
+     })
+    
+
+     product1.forEach(product => {
+      
+      product.style.display = 'none';
+         if (product.getAttribute('data-filter') == value.toLowerCase() || value == "All Menu" ){ 
+          renderCartItems(product);
+          product.style.display = 'block';
+        
+         }
+
+     })
+
+
+    }
+    
+ });
+ 
+
+
+
+
+
+
+

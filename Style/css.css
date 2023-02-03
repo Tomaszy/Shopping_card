@@ -14,15 +14,8 @@ body {
   margin-left: 5%;
   justify-content: center;
   display: grid;
-  grid-template-areas: "name1 box2" "box1  box2";
+  grid-template-areas: "name1 name2" "box1  box2";
   column-gap: 10px;
-}
-
-@media (max-width: 740px) {
-  .body {
-    display: grid;
-    grid-template-areas: "name1" "box1" "box2";
-  }
 }
 
 .naglowek_box {
@@ -121,19 +114,31 @@ body {
   justify-items: center;
 }
 
-.box1 .price {
+.box1 .money_box .input {
+  max-width: 38px;
+  max-height: 19px;
+  padding-left: 14px;
+  border: none;
+  overflow-y: hidden;
+}
+
+.box1 .money_box .input::-webkit-outer-spin-button, .box1 .money_box .input ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.box1 .money_box .price {
   padding-top: 5px;
   height: 29px;
   border-right: 1px solid red;
 }
 
-.box1 button {
+.box1 .money_box button {
   background-color: white;
   border: 0;
   cursor: pointer;
 }
 
-.box1 button:hover {
+.box1 .money_box button:hover {
   transform: scale(1.025);
 }
 
@@ -177,9 +182,8 @@ body {
 }
 
 .sidebar {
-  width: fit-content;
   min-width: 200px;
-  max-height: 420px;
+  max-height: 320px;
   border-radius: 5px;
   background-color: #eee;
   padding: 15px;
@@ -191,6 +195,7 @@ body {
 
 .sidebar .cart-item {
   max-height: 300px;
+  max-width: 320px;
   align-items: center;
   justify-content: space-between;
   display: grid;
@@ -263,4 +268,24 @@ body {
   color: white;
   display: flex;
   align-items: center;
+}
+
+ul {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  grid-area: name2;
+}
+
+ul li {
+  list-style: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px 10px;
+  margin: 0 10px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+ul li.active {
+  background-color: rgba(41, 255, 41, 0.897);
 }
